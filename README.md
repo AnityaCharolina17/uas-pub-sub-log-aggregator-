@@ -1,7 +1,7 @@
 # 🚀 UAS Sistem Terdistribusi: Pub-Sub Log Aggregator
 
-**Nama**: [ISI NAMA ANDA]  
-**NIM**: [ISI NIM ANDA]  
+**Nama**: [Anitya C R Sinaga]  
+**NIM**: [11231011]  
 **Mata Kuliah**: Sistem Paralel dan Terdistribusi
 
 ---
