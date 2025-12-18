@@ -1,6 +1,5 @@
 import psycopg2
-from psycopg2.extras import RealDictCursor
-import os
+from psycopg2.extras import RealDictCursor, Json
 import time
 
 def get_db_connection():
@@ -28,9 +27,10 @@ def get_db_connection():
 def init_db():
     """Initialize database schema"""
     conn = get_db_connection()
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
 
     try:
+        # Tabel events
         cur.execute("""
             CREATE TABLE IF NOT EXISTS processed_events (
                 id SERIAL PRIMARY KEY,
@@ -46,14 +46,15 @@ def init_db():
 
         cur.execute("""
             CREATE INDEX IF NOT EXISTS idx_topic
-            ON processed_events(topic);
+            ON processed_events(topic)
         """)
 
         cur.execute("""
             CREATE INDEX IF NOT EXISTS idx_processed_at
-            ON processed_events(processed_at DESC);
+            ON processed_events(processed_at DESC)
         """)
 
+        # Tabel stats (single row)
         cur.execute("""
             CREATE TABLE IF NOT EXISTS stats (
                 id INTEGER PRIMARY KEY DEFAULT 1,
@@ -71,6 +72,7 @@ def init_db():
             ON CONFLICT (id) DO NOTHING
         """)
 
+        # Audit log
         cur.execute("""
             CREATE TABLE IF NOT EXISTS audit_log (
                 id SERIAL PRIMARY KEY,
@@ -89,3 +91,50 @@ def init_db():
         print(f"\n❌ Fatal error: {e}")
         import traceback
         traceback.print_exc()
+    finally:
+        conn.close()
+
+def insert_event(event: dict) -> bool:
+    """
+    Insert event with deduplication.
+    Return True jika duplicate, False jika unique.
+    """
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+
+    try:
+        # received selalu naik
+        cur.execute("UPDATE stats SET received = received + 1")
+
+        cur.execute("""
+            INSERT INTO processed_events (
+                topic, event_id, timestamp, source, payload
+            )
+            VALUES (%s, %s, %s, %s, %s)
+            ON CONFLICT (topic, event_id) DO NOTHING
+            RETURNING id
+        """, (
+            event["topic"],
+            event["event_id"],
+            event["timestamp"],
+            event["source"],
+            Json(event["payload"])   # 🔥 INI KUNCINYA
+        ))
+
+        inserted = cur.fetchone()
+
+        if inserted:
+            cur.execute("UPDATE stats SET unique_processed = unique_processed + 1")
+            is_duplicate = False
+        else:
+            cur.execute("UPDATE stats SET duplicate_dropped = duplicate_dropped + 1")
+            is_duplicate = True
+
+        conn.commit()
+        return is_duplicate
+
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()

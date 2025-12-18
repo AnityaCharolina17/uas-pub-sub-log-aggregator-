@@ -1,24 +1,24 @@
 # 🚀 UAS Sistem Terdistribusi: Pub-Sub Log Aggregator
 
-**Nama**: [ISI NAMA ANDA]  
-**NIM**: [ISI NIM ANDA]  
-**Mata Kuliah**: Sistem Paralel dan Terdistribusi
+**Nama**        : Anitya C R Sinaga 
+**NIM**         : 11231011
+**Mata Kuliah** : Sistem Paralel dan Terdistribusi
 
 ---
 
 ## 📋 Deskripsi Sistem
 
 Sistem Pub-Sub log aggregator terdistribusi dengan fitur:
-- ✅ **Idempotency**: Event yang sama hanya diproses sekali
-- ✅ **Deduplication**: Menggunakan UNIQUE constraint (topic, event_id)
-- ✅ **Transaksi ACID**: Semua operasi dalam transaksi database
-- ✅ **Concurrency Control**: Handle multiple requests tanpa race condition
-- ✅ **Persistensi**: Data aman dengan Docker volumes
-- ✅ **Observability**: Metrics dan audit logging
+-  **Idempotency**: Event yang sama hanya diproses sekali
+-  **Deduplication**: Menggunakan UNIQUE constraint (topic, event_id)
+-  **Transaksi ACID**: Semua operasi dalam transaksi database
+-  **Concurrency Control**: Handle multiple requests tanpa race condition
+-  **Persistensi**: Data aman dengan Docker volumes
+-  **Observability**: Metrics dan audit logging
 
 ---
 
-## 🏗️ Arsitektur Sistem
+##  Arsitektur Sistem
 ┌─────────────┐         ┌─────────────┐         ┌─────────────┐
 │  Publisher  │────────>│ Aggregator  │<───────>│  PostgreSQL │
 │  Service    │  HTTP   │   Service   │   SQL   │  Database   │
@@ -38,7 +38,7 @@ Sistem Pub-Sub log aggregator terdistribusi dengan fitur:
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - Docker Desktop (Windows/Mac) atau Docker Engine (Linux)
