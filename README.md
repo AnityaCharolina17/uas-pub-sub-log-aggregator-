@@ -1,4 +1,4 @@
-# 🚀 UAS Sistem Terdistribusi: Pub-Sub Log Aggregator
+# UAS Sistem Terdistribusi: Pub-Sub Log Aggregator
 
 **Nama**        : Anitya C R Sinaga 
 **NIM**         : 11231011
@@ -6,7 +6,7 @@
 
 ---
 
-## 📋 Deskripsi Sistem
+##  Deskripsi Sistem
 
 Sistem Pub-Sub log aggregator terdistribusi dengan fitur:
 -  **Idempotency**: Event yang sama hanya diproses sekali
