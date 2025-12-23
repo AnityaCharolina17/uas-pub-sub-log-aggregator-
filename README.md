@@ -1,17 +1,17 @@
-#**Pub-Sub Idempotent Event Aggregator**
+🚀 Pub-Sub Idempotent Event Aggregator
 
-**##Nama : Anitya C R Sinaga
-##NIM : 11231011
-##Mata Kuliah : Sistem Paralel dan Terdistribusi (Kelas A)
+Nama : Anitya C R Sinaga
+NIM : 11231011
+Mata Kuliah : Sistem Paralel dan Terdistribusi (Kelas A)
 
-##Video Demo (YouTube)**
-https://youtu.be/ZD58cn6yZmU
+📺 Video Demo (YouTube)
+👉 https://youtu.be/ZD58cn6yZmU
 
-**Deskripsi Sistem**
+📌 Deskripsi Sistem
 
-Sistem Pub-Sub Idempotent Event Aggregator adalah sistem terdistribusi berbasis multi-service yang dirancang untuk menangani pengiriman event dengan throughput tinggi, aman terhadap duplikasi, serta tahan terhadap konkurensi dan restart container.
+Pub-Sub Idempotent Event Aggregator adalah sistem terdistribusi berbasis multi-service yang dirancang untuk menangani pengiriman event dengan throughput tinggi, aman terhadap duplikasi, dan tahan terhadap konkurensi.
 
-Sistem ini memastikan bahwa setiap event hanya diproses satu kali (idempotent), meskipun terjadi:
+Sistem ini memastikan setiap event hanya diproses satu kali (idempotent), meskipun terjadi:
 
 pengiriman ulang event,
 
@@ -19,31 +19,31 @@ request paralel,
 
 kegagalan jaringan,
 
-atau restart service.
+atau restart container.
 
-Seluruh komponen dijalankan secara lokal menggunakan Docker Compose, tanpa ketergantungan layanan eksternal.
+Seluruh sistem berjalan sepenuhnya di lingkungan lokal menggunakan Docker Compose, tanpa ketergantungan layanan eksternal.
 
-**Fitur Utama**
+✨ Fitur Utama
 
-1. Idempotency & Deduplication
-Event dengan kombinasi (topic, event_id) yang sama hanya diproses sekali menggunakan constraint unik di database.
+✅ Idempotency & Deduplication
+Event dengan kombinasi (topic, event_id) yang sama hanya diproses sekali menggunakan unique constraint di database.
 
-2. Atomic Transaction (ACID)
+✅ Atomic Transaction (ACID)
 Penyimpanan event dan pembaruan statistik dilakukan dalam satu transaksi PostgreSQL.
 
-3. Concurrency Safe
+✅ Concurrency Safe
 Aman terhadap request paralel dan race condition.
 
-4. Persistensi Data
-Data tetap tersimpan meskipun container dihentikan atau dijalankan ulang, menggunakan Docker volume.
+✅ Persistensi Data
+Data tetap tersimpan meskipun container dihentikan atau dijalankan ulang melalui Docker volume.
 
-5. Observability
+✅ Observability
 Menyediakan endpoint /health, /stats, dan /events untuk monitoring sistem.
 
-6. Automated Testing & Load Testing
-Diuji menggunakan pytest dan k6 untuk validasi fungsional dan performa.
+✅ Automated & Load Testing
+Sistem diuji menggunakan pytest dan k6 untuk validasi fungsional dan performa.
 
-**Arsitektur Sistem**
+🏗️ Arsitektur Sistem
 Publisher Service  --->  Aggregator Service  --->  PostgreSQL
                             |
                             v
@@ -60,14 +60,16 @@ PostgreSQL menyimpan event dan statistik secara persisten.
 
 Redis digunakan sebagai message broker internal.
 
-**Cara Menjalankan Sistem**
-1. Prasyarat
+🚀 Cara Menjalankan Sistem
+1️⃣ Prasyarat
 
-Docker & Docker Compose
+Docker
+
+Docker Compose
 
 Git
 
-2. Build & Run
+2️⃣ Build & Run Sistem
 
 Jalankan perintah berikut di root project:
 
@@ -79,15 +81,21 @@ Tunggu hingga muncul log:
 Uvicorn running on http://0.0.0.0:8080
 Database initialized successfully
 
-Endpoint API
-Endpoint	Method	Fungsi
+
+Artinya seluruh service sudah berjalan dengan normal.
+
+🌐 Endpoint API
+Endpoint	Method	Deskripsi
 /health	GET	Status layanan dan uptime
 /publish	POST	Mengirim event
 /events	GET	Melihat event tersimpan
 /stats	GET	Statistik pemrosesan event
 
-**Pengujian**
-Automated Testing (pytest)
+Base URL:
+
+http://localhost:8080
+
+🧪 Automated Testing (pytest)
 
 Sistem diuji menggunakan 12 test case, mencakup:
 
@@ -101,30 +109,36 @@ validasi schema,
 
 statistik sistem.
 
-Menjalankan test:
-
+Menjalankan Test
 pip install -r tests/requirements.txt
 pytest tests/test_basic.py -v
 
-Load Testing (k6)
 
-Load testing digunakan untuk menguji performa sistem pada beban tinggi.
+Semua test harus PASS sebelum demo.
 
-Menjalankan k6:
+🔥 Load Testing (k6)
 
+Load testing digunakan untuk menguji performa sistem di bawah beban tinggi.
+
+Menjalankan k6
 & "path\to\k6.exe" run k6_publish_test.js
 
-
-**Indikator keberhasilan:**
+Indikator Keberhasilan
 
 checks_succeeded: 100%
 
 http_req_failed: 0%
 
-**Persistensi Data**
+Sistem tetap responsif selama pengujian
+
+💾 Persistensi Data
 
 Sistem menggunakan named Docker volume untuk PostgreSQL.
-Data tetap tersedia meskipun container dihentikan dan dijalankan ulang:
+
+Untuk membuktikan persistensi data:
 
 docker compose down
 docker compose up
+
+
+Data event tetap tersedia setelah container dijalankan ulang.
