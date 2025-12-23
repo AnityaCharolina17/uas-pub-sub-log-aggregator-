@@ -82,8 +82,7 @@ Redis
 Jalankan perintah berikut di root project:
 
 ```bash
-docker compose up --build```
-
+docker compose up --build 
 
 Tunggu hingga muncul log:
 
@@ -99,7 +98,7 @@ Endpoint	Method	Deskripsi
 
 Base URL:
 
-```http://localhost:8080```
+http://localhost:8080
 
  **Automated Testing (pytest)**
 
@@ -116,8 +115,8 @@ validasi schema
 statistik sistem
 
 Menjalankan Test
-```pip install -r tests/requirements.txt
-pytest tests/test_basic.py -v```
+pip install -r tests/requirements.txt
+pytest tests/test_basic.py -v
 
 **Load Testing (k6)**
 
