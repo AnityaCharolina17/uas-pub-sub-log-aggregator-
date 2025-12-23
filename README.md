@@ -1,13 +1,13 @@
-Pub-Sub Idempotent Event Aggregator
+#**Pub-Sub Idempotent Event Aggregator**
 
-Nama : Anitya C R Sinaga
-NIM : 11231011
-Mata Kuliah : Sistem Paralel dan Terdistribusi (Kelas A)
+**##Nama : Anitya C R Sinaga
+##NIM : 11231011
+##Mata Kuliah : Sistem Paralel dan Terdistribusi (Kelas A)
 
-Video Demo (YouTube)
+##Video Demo (YouTube)**
 https://youtu.be/ZD58cn6yZmU
 
-Deskripsi Sistem
+**Deskripsi Sistem**
 
 Sistem Pub-Sub Idempotent Event Aggregator adalah sistem terdistribusi berbasis multi-service yang dirancang untuk menangani pengiriman event dengan throughput tinggi, aman terhadap duplikasi, serta tahan terhadap konkurensi dan restart container.
 
@@ -23,7 +23,7 @@ atau restart service.
 
 Seluruh komponen dijalankan secara lokal menggunakan Docker Compose, tanpa ketergantungan layanan eksternal.
 
-Fitur Utama
+**Fitur Utama**
 
 1. Idempotency & Deduplication
 Event dengan kombinasi (topic, event_id) yang sama hanya diproses sekali menggunakan constraint unik di database.
@@ -43,7 +43,7 @@ Menyediakan endpoint /health, /stats, dan /events untuk monitoring sistem.
 6. Automated Testing & Load Testing
 Diuji menggunakan pytest dan k6 untuk validasi fungsional dan performa.
 
-Arsitektur Sistem
+**Arsitektur Sistem**
 Publisher Service  --->  Aggregator Service  --->  PostgreSQL
                             |
                             v
@@ -60,7 +60,7 @@ PostgreSQL menyimpan event dan statistik secara persisten.
 
 Redis digunakan sebagai message broker internal.
 
-Cara Menjalankan Sistem
+**Cara Menjalankan Sistem**
 1. Prasyarat
 
 Docker & Docker Compose
@@ -85,7 +85,8 @@ Endpoint	Method	Fungsi
 /publish	POST	Mengirim event
 /events	GET	Melihat event tersimpan
 /stats	GET	Statistik pemrosesan event
-Pengujian
+
+**Pengujian**
 Automated Testing (pytest)
 
 Sistem diuji menggunakan 12 test case, mencakup:
@@ -114,13 +115,13 @@ Menjalankan k6:
 & "path\to\k6.exe" run k6_publish_test.js
 
 
-Indikator keberhasilan:
+**Indikator keberhasilan:**
 
 checks_succeeded: 100%
 
 http_req_failed: 0%
 
-Persistensi Data
+**Persistensi Data**
 
 Sistem menggunakan named Docker volume untuk PostgreSQL.
 Data tetap tersedia meskipun container dihentikan dan dijalankan ulang:
