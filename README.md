@@ -49,3 +49,6 @@ Sistem Pub-Sub log aggregator terdistribusi dengan fitur:
 ```bash
 git clone <repository-url>
 cd uas-sistem-terdistribusi
+
+
+Link Youtube : https://youtu.be/ZD58cn6yZmU
